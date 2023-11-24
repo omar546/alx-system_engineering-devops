@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# displays Best School 10 times.
+
+CC=1
+while [ $CC -lt 101 ]
+do
+    if [ $((CC%15)) = 0 ]
+    then
+        echo "FizzBuzz"
+    elif [ $((CC%5)) = 0 ]
+    then
+        echo "Buzz"
+    elif [ $((CC%3)) = 0 ]
+    then
+        echo "Fizz"
+    else
+        echo "$CC"
+    fi
+    let CC+=1
+done
