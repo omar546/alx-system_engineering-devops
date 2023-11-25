@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# List of all the process in the system
+
+ps -auxf

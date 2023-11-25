@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# Displays processes of bash.
+
+ps auxf |grep  bash
