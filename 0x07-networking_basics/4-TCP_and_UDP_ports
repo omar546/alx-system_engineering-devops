@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# shows Active Internet connections and
+# the PID and program name of each socket
+
+sudo netstat -lp
