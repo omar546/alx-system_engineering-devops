@@ -2,23 +2,16 @@
 # retrieve DNS records of subdomains for the specified domain
 # shellcheck disable=SC2086
 
-function get_a_records(){
-    if [[ -n "$2" ]]; then
-        res="$(dig "$2.$1" | grep -i -A1 "ANSWER SECTION:" | tail -n 1)"
-        dest="$(echo "$res" | awk '{ print $5 }')"
-        type="$(echo "$res" | awk '{ print $4 }')"
-        echo  "The subdomain "$2" is a "$type" record and points to "$dest""
-
+func () {
+    if [ -n "$2" ]
+    then
+	dig "$2.$1" | grep -A1 'ANSWER SECTION:' | paste - - | awk -v sd="$2" '{print "The subdomain " sd " is a " $7 " record and points to " $8}'
     else
-        subdomains=(www lb-01 web-01 web-02)
-        for sub_d in "${subdomains[@]}"; do
-            res="$(dig "$sub_d.$1" | grep -i -A1 "ANSWER SECTION:" | tail -n 1)"
-            dest="$(echo ""$res"" | awk '{ print $5 }')"
-            type="$(echo """$res""" | awk '{ print $4 }')"
-            echo "The subdomain ""$sub_d"" is a ""$type"" record and points to ""$dest"""
-
-        done
+	dig "www.$1" | grep -A1 'ANSWER SECTION:' | paste - - | awk '{print "The subdomain www is a " $7 " record and points to " $8}'
+	dig "lb-01.$1" | grep -A1 'ANSWER SECTION:' | paste - - | awk '{print "The subdomain lb-01 is a " $7 " record and points to " $8}'
+	dig "web-01.$1" | grep -A1 'ANSWER SECTION:' | paste - - | awk '{print "The subdomain web-01 is a " $7 " record and points to " $8}'
+	dig "web-02.$1" | grep -A1 'ANSWER SECTION:' | paste - - | awk '{print "The subdomain web-02 is a " $7 " record and points to " $8}'
     fi
- 
 }
-get_a_records "$1" "$2";
+
+func "$1" "$2"
