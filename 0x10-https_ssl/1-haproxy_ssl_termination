@@ -1,0 +1,17 @@
+defaults
+    mode http
+    timeout client 15s
+    timeout connect 10s
+    timeout server 15s
+    timeout http-request 10s
+
+frontend anoomar-frontend
+    bind *:80
+    bind *:443 ssl crt /etc/haproxy/certs/anoomar.tech.pem
+    default_backend anoomar-backend
+
+backend anoomar-backend
+    http-request redirect scheme https if  !{ ssl_fc }
+    balance roundrobin
+    server 320986-web-01 34.239.207.113:80 check
+    server 320986-web-02 54.237.85.74:80 check

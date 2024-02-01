@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# retrieve DNS records of subdomains for the specified domain
+# shellcheck disable=SC2086
+
+function get_a_records(){
+    if [[ -n "$2" ]]; then
+        res="$(dig "$2.$1" | grep -i -A1 "ANSWER SECTION:" | tail -n 1)"
+        dest="$(echo "$res" | awk '{ print $5 }')"
+        type="$(echo "$res" | awk '{ print $4 }')"
+        echo  "The subdomain "$2" is a "$type" record and points to "$dest""
+
+    else
+        subdomains=(www lb-01 web-01 web-02)
+        for sub_d in "${subdomains[@]}"; do
+            res="$(dig "$sub_d.$1" | grep -i -A1 "ANSWER SECTION:" | tail -n 1)"
+            dest="$(echo ""$res"" | awk '{ print $5 }')"
+            type="$(echo """$res""" | awk '{ print $4 }')"
+            echo "The subdomain ""$sub_d"" is a ""$type"" record and points to ""$dest"""
+
+        done
+    fi
+ 
+}
+get_a_records "$1" "$2";
