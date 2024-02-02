@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
-# Install nginx on web-01 server
-# Nginx should be on port 80
+# install Nginx on a Web Sever
 
-apt-get -y update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-echo 'Hello World!' > /var/www/html/index.html
-service nginx start
+# Updating Packages
+sudo apt-get update
+sudo apt-get -y install nginx
+
+# Allow incoming traffic
+sudo ufw allow 'Nginx HTTP'
+
+# create an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
+
+# Testing Nginx configurations (Syntax errors)
+sudo nginx -t
+sudo service nginx start
