@@ -1,4 +1,11 @@
 #!/usr/bin/puppet
+package { 'python3.8':
+  ensure => '3.8.10',
+}
+package { 'python3-pip':
+  ensure => installed,
+  require => package['python3.8'],
+}
 # installs Flask from pip
 package { 'flask':
   ensure   => '2.1.0',
