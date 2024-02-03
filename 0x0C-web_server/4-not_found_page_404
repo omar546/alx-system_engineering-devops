@@ -9,7 +9,7 @@ sudo apt-get install -y nginx
 echo "Hello World!" | sudo tee /var/www/html/index.html >/dev/null
 
 # Performing a "(301) moved permanently redirection"
-myString="server_name _;\\n\trewrite ^\\/redirect_me https:\\/\\/github.com\\/besthor permanent;"
+myString="server_name _;\\n\trewrite ^\\/redirect_me https:\\/\\/github.com\\/omar564 permanent;"
 sudo sed -i "s/server_name _;/$myString/" /etc/nginx/sites-enabled/default
 
 # 404 Custom error page
