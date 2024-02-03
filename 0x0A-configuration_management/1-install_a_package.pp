@@ -1,19 +1,21 @@
-#puppet to install flask from pip
+# Puppet manifest to install Flask from pip
 package { 'python3.8':
   ensure => '3.8.10',
 }
+
 package { 'python3-pip':
   ensure  => installed,
-  require => package['python3.8'],
+  require => Package['python3.8'],
 }
-# installs Flask from pip
+
 package { 'flask':
   ensure   => '2.1.0',
   provider => 'pip3',
+  require  => Package['python3-pip'],
 }
-# Install Werkzeug as a requirement for Flask
-package { 'Werkzeug':
+
+package { 'werkzeug':
   ensure   => '2.1.1',
   provider => 'pip3',
-  require  => Package['Flask'],
+  require  => Package['python3-pip'],
 }
