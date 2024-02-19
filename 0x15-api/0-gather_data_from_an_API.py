@@ -1,34 +1,21 @@
 #!/usr/bin/python3
-"""script for parsing web data from an api
-"""
+"""Return information about his/her TODO list progress"""
+import requests
+from sys import argv
+
+
 if __name__ == "__main__":
-    import json
-    import requests
-    import sys
-    base = 'https://jsonplaceholder.typicode.com/'
-    try:
-        employee_id = sys.argv[1]
-    except:
-        print('Usage: {} employee_id'.format(sys.argv[0]))
-        exit(1)
+    user_id = argv[1]
 
-    url = base + 'users?id={}'.format(employee_id)
-    response = requests.get(url)
-    user = json.loads(response.text)
-    name = user[0].get('name')
+    url = "https://jsonplaceholder.typicode.com/"
+    uri_user_id = "users/{}".format(user_id)
+    uri_todos = "todos"
 
-    url = base + 'todos?userId={}'.format(employee_id)
-    response = requests.get(url)
-    objs = json.loads(response.text)
-    done = 0
-    tasks_done = []
-    for obj in objs:
-        if obj.get('completed'):
-            tasks_done.append(obj)
-            done += 1
+    user = requests.get(url + uri_user_id).json()
+    tasks = requests.get(url + uri_todos, params={"userId": user_id}).json()
+    tasks_completed = [task for task in tasks if task.get("completed") is True]
 
-    # print the output about user's task completion
-    print("{} is done with tasks({}/{}):".format(name, done, len(objs)))
-    # print the output title of completed tasks
-    for task in tasks_done:
-        print("\t {}".format(task.get('title')))
+    print("Employee {} is done with tasks({}/{}):".format(user.get("name"),
+                                                          len(tasks_completed),
+                                                          len(tasks)))
+    [print("\t {}".format(task.get("title"))) for task in tasks_completed]
