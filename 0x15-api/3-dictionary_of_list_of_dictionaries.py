@@ -15,4 +15,4 @@ if __name__ == "__main__":
                 "username": us.get("username")
             } for tod in requests.get(url + "todos",
                                       params={"userId": us.get("id")}).json()]
-                                      for us in users}, jsonfile)
+                                        for us in users}, jsonfile)
