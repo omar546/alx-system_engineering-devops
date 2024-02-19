@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """
-returns info about employee Tasks progress using api
+returns info about employee TODOs progress
 """
 import re
 import requests
 import sys
 
-"""REST-API"""
+
 API = "https://jsonplaceholder.typicode.com"
 
 
@@ -14,17 +14,17 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         if re.fullmatch(r'\d+', sys.argv[1]):
             id = int(sys.argv[1])
-            user = requests.get('{}/users/{}'.format(API, id)).json()
-            result = requests.get('{}/todos'.format(API)).json()
-            user_name = user.get('name')
-            todoz = list(filter(lambda x: x.get('userId') == id, result))
-            todoz_done = list(filter(lambda x: x.get('completed'), todoz))
+            user_res = requests.get('{}/users/{}'.format(API, id)).json()
+            todos_res = requests.get('{}/todos'.format(API)).json()
+            user_name = user_res.get('name')
+            todos = list(filter(lambda x: x.get('userId') == id, todos_res))
+            todos_done = list(filter(lambda x: x.get('completed'), todos))
             print(
                 'Employee {} is done with tasks({}/{}):'.format(
                     user_name,
-                    len(todoz_done),
-                    len(todoz)
+                    len(todos_done),
+                    len(todos)
                 )
             )
-            for done in todoz_done:
-                print('\t {}'.format(done.get('title')))
+            for todo_done in todos_done:
+                print('\t {}'.format(todo_done.get('title')))
