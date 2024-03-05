@@ -1,36 +1,26 @@
 #!/usr/bin/python3
-"""script for parsing web data from an api
-"""
+"""parsing web data from an api"""
 import json
 import requests
 import sys
 
 
 def recurse(subreddit, hot_list=[]):
-    """api call to reddit to get the number of subscribers
-    """
-    base_url = 'https://www.reddit.com/r/{}/top.json'.format(
-        subreddit
-    )
-    headers = {'User-Agent': 'Agent-Ano'}
+    """returns a list of the titles of all hot articles"""
+    reddit_url = "https://www.reddit.com/r/" + subreddit
+    reddit_url2 = reddit_url + "/hot.json?limit=100&after=after"
+    header = {"User-Agent": "Agent-Ano"}
+    req = requests.get(reddit_url2, headers=header)
+    reddit = req.json()
 
-    if len(hot_list) == 0:
-        # grab info about all users
-        url = base_url
-    else:
-        url = base_url + '?after={}_{}'.format(
-            hot_list[-1].get('kind'),
-            hot_list[-1].get('data').get('id')
-        )
-    response = requests.get(url, headers=headers)
-    resp = json.loads(response.text)
-    try:
-        # grab the info about the users' tasks
-        data = resp.get('data')
-        children = data.get('children')
-    except:
-        return None
-    if children is None or data is None or len(children) < 1:
+    if (req.status_code == 200):
+        """checks if the response status is ok"""
+        hot_post = reddit.get("data").get("children")
+        after = reddit.get("data").get("after")
+        for posts in hot_post:
+            hot_list.append(posts.get("data").get("title"))
+        if after is None:
+            recurse(subreddit, hot_list, after)
         return hot_list
-    hot_list.extend(children)
-    return recurse(subreddit, hot_list)
+    else:
+        return None
