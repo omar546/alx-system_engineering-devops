@@ -1,4 +1,9 @@
+#!/usr/bin/python3
+"""script for parsing web data from an api"""
+
+import json
 import requests
+import sys
 
 def count_words(subreddit, word_list):
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
