@@ -2,7 +2,7 @@
 """parsing web data from an api"""
 import json
 import requests
-import sys
+
 
 
 def number_of_subscribers(subreddit):
