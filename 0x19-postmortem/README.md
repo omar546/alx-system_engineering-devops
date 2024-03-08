@@ -11,18 +11,27 @@ The outage was caused by a mistake in setting up the load balancer, which caused
 
 ### **Incident Timeline:** 
 
-**10:00 PM:** Automated alerts detected a sharp increase in server response times. 
- 
-**10:15 PM:** Engineering investigated, suspecting network issues. 
-  
-**11:00 PM:** Potential DDoS attack considered, security team notified. 
-  
-**11:30 PM:** Investigation revealed excessive traffic being routed to a specific backend server via the load balancer. 
-   
-**12:00 AM:** Senior engineers and DevOps intervened for urgent resolution. 
-    
-**1:30 AM:** Load balancer settings adjusted to distribute traffic more evenly, rectifying the situation.
-  
+     10:00 PM ────────────────── Automated alerts detected a sharp increase in server response times.
+         │
+         │
+    10:15 PM ────────────────── Engineering investigated, suspecting network issues. 
+         │
+         │
+    11:00 PM ────────────────── Potential DDoS attack considered, security team notified. 
+         │
+         │
+    11:30 PM ────────────────── Investigation revealed excessive traffic being routed to a specific backend server.
+         │
+         │
+    12:00 AM ────────────────── Senior engineers and DevOps intervened for urgent resolution. 
+         │
+         │
+    1:30 AM ─────────────────── Load balancer settings adjusted to distribute traffic more evenly.
+         │
+         │
+    2:00 AM ─────────────────── Service fully restored
+
+
 ### **Root Cause and Fix:** 
 
 The issue was caused by a misconfiguration in the load balancer settings, resulting in traffic being unevenly distributed to backend servers. 
