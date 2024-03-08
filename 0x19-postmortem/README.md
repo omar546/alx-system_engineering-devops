@@ -1,10 +1,15 @@
 ### **Issue Summary:** 
 
-**Duration:** The outage lasted 4 hours, from 10:00 PM to 2:00 AM (UTC-5) on March 5th, 2024. 
+#### **Duration:** 
+The outage lasted 4 hours, from 10:00 PM to 2:00 AM (UTC-5) on March 5th, 2024. 
  
-**Impact:** The outage mainly affected our mobile app, resulting in a significant decrease of 70% in user activity during that time. **Root Cause:** * The outage was caused by a mistake in setting up the load balancer, which caused an overload on one of the servers that handle the app's requests.
+#### **Impact:** 
+The outage mainly affected our mobile app, resulting in a significant decrease of 70% in user activity during that time. 
 
-**Incident Timeline:** 
+#### **Root Cause:**
+The outage was caused by a mistake in setting up the load balancer, which caused an overload on one of the servers that handle the app's requests.
+
+### **Incident Timeline:** 
 
 **10:00 PM:** Automated alerts detected a sharp increase in server response times. 
  
@@ -18,7 +23,7 @@
     
 **1:30 AM:** Load balancer settings adjusted to distribute traffic more evenly, rectifying the situation.
   
-**Root Cause and Fix:** 
+### **Root Cause and Fix:** 
 
 The issue was caused by a misconfiguration in the load balancer settings, resulting in traffic being unevenly distributed to backend servers. 
 
@@ -26,11 +31,13 @@ This led to overload on one server, disrupting service functionality.
 
 The issue was resolved by correcting the load balancer settings to evenly distribute traffic, restoring normal service operation.
    
-**Corrective and Preventative Steps:** 
+### **Corrective and Preventative Steps:** 
    
-**Improvements:** The load balancer monitoring system will be improved to detect misconfigurations more quickly. 
+#### **Improvements:** 
+
+The load balancer monitoring system will be improved to detect misconfigurations more quickly. 
     
-**Tasks:** 
+#### **Tasks:** 
      
 Implement automated validation of load balancer configurations. 
       
