@@ -1,12 +1,11 @@
 # Fix too much requests problem
 
-exec {'fix':
-  provider => shell,
-  command  => 'sudo sed -i "s/ULIMIT=\"-n 15\"/ULIMIT=\"-n 4096\"/" /etc/default/nginx',
-  before   => Exec['restart'],
+exec { 'fix-uslimit':
+  path    => ['/usr/bin', '/sbin', '/bin', '/usr/sbin'],
+  command => "sed -i 's/15/4096/g' /etc/default/nginx",
 }
 
-exec {'restart-nginx':
-  provider => shell,
-  command  => 'sudo service nginx restart',
+exec { 'nginx-restart':
+  path    => ['/usr/bin', '/sbin', '/bin', '/usr/sbin'],
+  command => 'sudo service nginx restart',
 }
