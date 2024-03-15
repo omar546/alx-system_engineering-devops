@@ -1,23 +1,15 @@
 #!/usr/bin/python3
 """parsing web data from an api"""
-import json
 import requests
 
-
-
 def number_of_subscribers(subreddit):
-    """get num of subs"""
-    base_url = 'https://www.reddit.com/r/'
-    headers = {'User-Agent': 'Agent-Ano'}
-    url = base_url + '{}/about.json'.format(subreddit)
+    """Return the total number of subscribers on a given subreddit."""
+    url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {"User-Agent": "Mozilla/5.0"}
     response = requests.get(url, headers=headers, allow_redirects=False)
-    resp = json.loads(response.text)
-
-    try:
-        data = resp.get('data')
-        subscribers = data.get('subscribers')
-    except:
+    if response.status_code == 200:
+        data = response.json()
+        subscribers = data['data']['subscribers']
+        return subscribers
+    else:
         return 0
-    if subscribers is None:
-        return 0
-    return int(subscribers)
