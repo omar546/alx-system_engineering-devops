@@ -3,25 +3,23 @@
 import json
 import requests
 
-
 def number_of_subscribers(subreddit):
-    """get the number of subscribers"""
     base_url = 'https://www.reddit.com/r/'
     headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
     }
 
-    # grab info about all users
     url = base_url + '{}/about.json'.format(subreddit)
     response = requests.get(url, headers=headers)
-    resp = json.loads(response.text)
+
+    # Check if the request was successful
+    if response.status_code != 200:
+        return 0
 
     try:
-        # grab the info about the users' tasks
-        data = resp.get('data')
-        subscribers = data.get('subscribers')
-    except:
+        resp_data = response.json()
+        subscribers = resp_data['data']['subscribers']
+    except (KeyError, json.JSONDecodeError):
         return 0
-    if subscribers is None:
-        return 0
-    return int(subscribers)
+    
+    return subscribers
